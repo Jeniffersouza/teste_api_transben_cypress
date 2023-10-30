@@ -1,36 +1,36 @@
-describe('Conjunto de testes da API', () => {
+describe('testes API ', () => {
   
   var TokenResposta;
   
     it('Autentica com sucesso na API', () => {
       cy.request({
         method: 'POST',
-        url: 'https://fakestoreapi.com/auth/login',
+        url: 'https://hmlapi.angellira.com.br/freight-management/v1/login/335111',
         body: {
-          username: "mor_2314",
-          password: "83r5^_"
+          username: "82858981051",
+          password: "Jeni1312@"
         },
         headers: {
           'Content-Type': 'application/json'
         }
       }).then((response) => {
-         expect(response.body.token).to.exist
-         TokenResposta = response.body.token
-      }
-        )
+        expect(response.body.access_token).to.exist
+        TokenResposta = response.body.access_token
+     })
+        
     })
   
-    it('Listar usuarios estando logado', () => {
+    it('Puxar dados básicos', () => {
       
       cy.request({
         method: 'GET',
-        url: 'https://fakestoreapi.com/users',
+        url: 'https://hmlapi.angellira.com.br/registration/driver/335111',
         headers: {
           'Authorization': TokenResposta
         }
       })
-      .then(response => response.body[0])
-      .should('have.keys', ['__v', 'address', 'email', 'id', 'name', 'password', 'phone', 'username'])
+      .then(response => cy.log(response))
+      //colocar para aparecer os components
   
     })
   
@@ -38,26 +38,19 @@ describe('Conjunto de testes da API', () => {
       it('Adicionando um novo usuário', () => {
       cy.request({
         method: 'POST',
-        url: 'https://fakestoreapi.com/users',
+        url: 'https://hmlapi.angellira.com.br/registration/driver/335111',
         body: {
-                      email:'John@gmail.com',
-                      username:'johnd',
-                      password:'m38rmF$',
-                      name:{
-                          firstname:'John',
-                          lastname:'Doe'
-                      },
-                      address:{
-                          city:'kilcoole',
-                          street:'7835 new road',
-                          number:3,
-                          zipcode:'12926-3874',
-                          geolocation:{
-                              lat:'-37.3159',
-                              long:'81.1496'
-                          }
-                      },
-                      phone:'1-570-236-7033'
+
+          "cpf": "78178009013",
+          "name": "Jeniffer Souza",
+          "rg": "307811943",
+          "whatsapp": "49999926587",
+          "email": "cludad@gmail.com",
+          "password":"Jeni1312@",
+          "relationshipType": [
+              2,
+              61
+          ]
         },
         headers: {
           'Content-Type': 'application/json'
